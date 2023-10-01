@@ -16,16 +16,15 @@ run_gnome_extension_config() {
         sudo glib-compile-schemas "~/.local/share/gnome-shell/extensions/${folder}/schemas"
         echo "$name konfiguriert! \n\n"
     else
-        echo "Nvidia-Treiber wird nicht installiert."
+        echo ""
     fi
-    
-    cat a >> b
 }
 
 read -p "Sollen gnome-tweaks Konfiguriert werden? (J/n): " choice
 choice=${choice:-'J'}
 if [ "$choice" = "J" ] || [ "$choice" = "j" ]; then
     run_gnome_extension_config Dash-to-Dock dash-to-dock@micxgx.gmail.com org.gnome.shell.extensions.dash-to-dock.gschema.xml
+    exit 0
 else
     echo "Running Setup"
 fi
