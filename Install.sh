@@ -9,30 +9,23 @@ run_gnome_extension_config() {
     folder="$2"
     xml="$3"
 
+    read -p "Soll $name konfiguriert werden? (J/n): " choice
+    choice=${choice:-'J'}
+    if [ "$choice" = "J" ] || [ "$choice" = "j" ]; then
+        cat "preconfig/$xml" >> "~/.local/share/gnome-shell/extensions/${folder}/schemas/${xml}"
+        sudo glib-compile-schemas "~/.local/share/gnome-shell/extensions/${folder}/schemas"
+        echo "$name konfiguriert! \n\n"
+    else
+        echo "Nvidia-Treiber wird nicht installiert."
+    fi
+    
+    cat a >> b
 }
 
 read -p "Sollen gnome-tweaks Konfiguriert werden? (J/n): " choice
 choice=${choice:-'J'}
 if [ "$choice" = "J" ] || [ "$choice" = "j" ]; then
-    ext="~/.local/share/gnome-shell/extensions/"
-    
-    read -p "Soll Dash-To-Panel konfiguriert werden? (J/n): " choice
-    choice=${choice:-'J'}
-    if [ "$choice" = "J" ] || [ "$choice" = "j" ]; then
-        echo "Nvidia-Treiber werden installiert"
-        sudo ubuntu-drivers autoinstall
-    else
-        read -p "Möchten Sie den Nvidia-Treiber über apt installieren? (J/n: " choice
-        choice=${choice:-'J'}
-        if [ "$choice" = "J" ] || [ "$choice" = "j" ]; then
-            echo "Nvidia-Treiber werden über apt installiert"
-            sudo apt install nvidia-driver-535 nvidia-dkms-535
-        else
-            echo "Nvidia-Treiber wird nicht installiert."
-        fi
-    fi
-
-    
+    run_gnome_extension_config Dash-to-Dock dash-to-dock@micxgx.gmail.com org.gnome.shell.extensions.dash-to-dock.gschema.xml
 else
     echo "Running Setup"
 fi
@@ -51,7 +44,7 @@ install_nvidia_driver() {
         echo "Nvidia-Treiber werden installiert"
         sudo ubuntu-drivers autoinstall
     else
-        read -p "Möchten Sie den Nvidia-Treiber über apt installieren? (J/n: " choice
+        read -p "Möchten Sie den Nvidia-Treiber über apt installieren? (J/n): " choice
         choice=${choice:-'J'}
         if [ "$choice" = "J" ] || [ "$choice" = "j" ]; then
             echo "Nvidia-Treiber werden über apt installiert"
