@@ -12,9 +12,13 @@ run_gnome_extension_config() {
     read -p "Soll $name konfiguriert werden? (J/n): " choice
     choice=${choice:-'J'}
     if [ "$choice" = "J" ] || [ "$choice" = "j" ]; then
-        rm "~/.local/share/gnome-shell/extensions/${folder}/schemas/${xml}"
-        cat "preconfig/$xml" >> "~/.local/share/gnome-shell/extensions/${folder}/schemas/${xml}"
-        glib-compile-schemas "~/.local/share/gnome-shell/extensions/${folder}/schemas"
+        xml_path="~/.local/share/gnome-shell/extensions/${folder}/schemas/${xml}"
+        folder_path="~/.local/share/gnome-shell/extensions/${folder}/schemas"
+        base_path="preconfig/$xml"
+        
+        rm $xml_path
+        cat $base_path >> $xml_path
+        glib-compile-schemas $folder_path
         echo "$name konfiguriert!"
     else
         echo ""
