@@ -6,11 +6,13 @@ install_nvidia_driver() {
     choice=${choice:-'J'}
 
     if [ "$choice" = "J" ] || [ "$choice" = "j" ]; then
+        echo "Nvidia-Treiber werden installiert"
         sudo ubuntu-drivers autoinstall
     else
         read -p "Möchten Sie den Nvidia-Treiber über apt installieren? (J/n: " choice
         choice=${choice:-'J'}
         if [ "$choice" = "J" ] || [ "$choice" = "j" ]; then
+            echo "Nvidia-Treiber werden über apt installiert"
             sudo apt install nvidia-driver-535 nvidia-dkms-535
         else
             echo "Nvidia-Treiber wird nicht installiert."
