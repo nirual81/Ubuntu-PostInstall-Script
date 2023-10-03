@@ -77,6 +77,18 @@ else
     echo "PyCharm wird nicht installiert."
 fi
 
+
+read -p "Möchten Sie Grub-Customizer installieren? (J/n): " choice
+choice=${choice:-'J'}
+
+if [ "$choice" = "J" ] || [ "$choice" = "j" ]; then
+    sudo add-apt-repository ppa:danielrichter2007/grub-customizer
+    sudo apt-get update
+    sudo apt-get install grub-customizer
+else
+    echo "Grub-Customizer wird nicht installiert."
+fi
+
 # Installiere den Nvidia-Treiber, wenn gewünscht
 install_nvidia_driver
 
